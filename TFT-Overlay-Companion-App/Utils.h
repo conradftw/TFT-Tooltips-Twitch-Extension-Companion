@@ -60,7 +60,6 @@ private:
 	std::string postEndpoint = "pubsub/";
 	std::string loginCheck = "login/";
 	std::string healthEndpoint = "health/";
-	//std::string loginToken = "thepookguy.950753077.CBjp9mzWcn7svr4RezBHottn";
 	std::string loginToken = "";
 	std::string channelName = "";
 };
@@ -132,12 +131,6 @@ struct BoundingBox {
 	Vector2 corner2; // bottom-right corner
 
 	friend void to_json(nlohmann::json& j, const BoundingBox& obj) {
-		/*j = nlohmann::json{
-			{"corner1_x", obj.corner1.x},
-			{"corner1_y", obj.corner1.y},
-			{"corner2_x", obj.corner2.x},
-			{"corner2_y", obj.corner2.y},
-		};*/ 
 		j = nlohmann::json{
 			{"corner1", obj.corner1},
 			{"corner2", obj.corner2},

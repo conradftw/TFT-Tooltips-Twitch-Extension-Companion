@@ -11,7 +11,6 @@
 #include "MemoryReader.h"
 #include "Utils.h"
 #include "Renderer.h"
-#include "Offsets.h"
 
 #include <memory>
 #include "TraitObject.h"
@@ -64,7 +63,7 @@ int main() {
         }
     }
 
-    std::cout << "Login token has been validated!\n";
+    std::cout << "Login token has been validated!\n" << std::endl;
 
     try {
         Overlay overlay = Overlay();
@@ -97,7 +96,7 @@ void MainLoop(Overlay& overlay, MemoryReader& reader, ServerConnector& connector
                 reader.HookToProcess();
                 isHooked = true;
                 snapshot = MemSnapshot();
-                std::cout << "Hooked into TFT!\n";
+                std::cout << "Detected TFT game!\n";
 
                 if (showOverlay) {
                     overlay.Init();
@@ -108,7 +107,7 @@ void MainLoop(Overlay& overlay, MemoryReader& reader, ServerConnector& connector
                 if (!reader.IsHookedToProcess()) {
                     isHooked = false;
                     std::cout << "TFT game has closed.\n";
-                    std::cout << "Waiting for TFT game...\n";
+                    std::cout << "Waiting for TFT game...\n" << std::endl;
 
 
                     if (showOverlay) {

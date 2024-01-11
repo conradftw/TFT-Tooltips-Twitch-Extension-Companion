@@ -73,10 +73,10 @@ void ServerConnector::sendDataToServer(std::string data) {
 
 	if (response.status_code != 200) {
 		isServerRunning = false;
-		std::cout << "Error: " << response.status_code << std::endl;
+		std::cout << "Unsuccessful Request. Error: " << response.status_code << std::endl;
 	}
 	else {
-		std::cout << "Request Successful" << std::endl;
+		//std::cout << "Request Successful" << std::endl;
 	}
 }
 
@@ -87,9 +87,9 @@ DWORD64 Memory::ReadAddress(HANDLE hProcess, DWORD64 addr, std::string name) {
 	SIZE_T bytesRead{ 0 };
 
 	if (!ReadProcessMemory(hProcess, (LPCVOID)addr, &ptr, sizeof(DWORD64), &bytesRead) || bytesRead <= 0) {
-		std::cout << "Address ReadProcessMemory failed for: " << name << "\n";
-		std::cout << "Tried to read address: " << std::hex << addr << std::dec << "\n";
-		std::cout << "GetLastError: " << std::dec << GetLastError() << "\n";
+		//std::cout << "Address ReadProcessMemory failed for: " << name << "\n";
+		//std::cout << "Tried to read address: " << std::hex << addr << std::dec << "\n";
+		//std::cout << "GetLastError: " << std::dec << GetLastError() << "\n";
 	}
 
 	return ptr;
@@ -99,8 +99,8 @@ void Memory::ReadStructure(HANDLE hProcess, DWORD64 addr, void* structure, int s
 	SIZE_T bytesRead{ 0 };
 
 	if (!ReadProcessMemory(hProcess, (LPCVOID)addr, structure, size, &bytesRead) || bytesRead <= 0) {
-		std::cout << "Structure ReadProcessMemory failed for: " << name << "\n";
-		std::cout << "GetLastError: " << std::dec << GetLastError() << "\n";
+		//std::cout << "Structure ReadProcessMemory failed for: " << name << "\n";
+		//std::cout << "GetLastError: " << std::dec << GetLastError() << "\n";
 	}
 }
 

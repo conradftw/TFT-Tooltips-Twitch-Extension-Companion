@@ -107,8 +107,6 @@ bool MemoryReader::hasGameStarted() {
 void MemoryReader::MakeSnapshot(MemSnapshot& snapshot) {
 	if (!moduleBaseAddr) return;
 
-	std::cout << "Called MakeSnapshot\n";
-
 	if (hasGameStarted()) {
 		ReadRenderer(snapshot);
 		ReadCamera(snapshot);
@@ -120,8 +118,6 @@ void MemoryReader::MakeSnapshot(MemSnapshot& snapshot) {
 }
 
 void MemoryReader::ReadRenderer(MemSnapshot& snapshot) {
-	std::cout << "Called ReadRenderer\n";
-
 	if (moduleBaseAddr == 0) return;
 
 	DWORD64 rendererAddr = Memory::ReadAddress(hProcess, moduleBaseAddr + offsets.at("Renderer"), "Renderer");
@@ -132,8 +128,6 @@ void MemoryReader::ReadRenderer(MemSnapshot& snapshot) {
 }
 
 void MemoryReader::ReadCamera(MemSnapshot& snapshot) {
-	std::cout << "Called ReadCamera\n";
-
 	if (moduleBaseAddr == 0) return;
 
 	DWORD64 hudInstanceAddr = Memory::ReadAddress(hProcess, moduleBaseAddr + offsets.at("HudInstance"), "HUD_Instance");
@@ -157,8 +151,6 @@ void MemoryReader::ReadCamera(MemSnapshot& snapshot) {
 }
 
 void MemoryReader::ReadStageAndRound(MemSnapshot& snapshot) {
-	std::cout << "Called ReadStageAndRound\n";
-
 	if (moduleBaseAddr == 0) return;
 
 	DWORD64 stageStrBase = Memory::ReadAddress(hProcess, moduleBaseAddr + offsets.at("StageStr"), "StageStrBase");
@@ -227,8 +219,6 @@ Vector3 MemoryReader::GetMinionPosition(DWORD64 minionAddr) {
 }
 
 void MemoryReader::ReadMinions(MemSnapshot& snapshot) {
-	std::cout << "Called ReadMinions\n";
-
 	if (moduleBaseAddr == 0) return;
 
 	snapshot.units.clear();
@@ -285,8 +275,6 @@ void MemoryReader::ReadMinions(MemSnapshot& snapshot) {
 }
 
 void MemoryReader::ReadTraits(MemSnapshot& snapshot) {
-	std::cout << "Called ReadTraits\n";
-
 	if (moduleBaseAddr == 0) return;
 
 	snapshot.traits.clear();
@@ -316,8 +304,6 @@ void MemoryReader::ReadTraits(MemSnapshot& snapshot) {
 
 
 void MemoryReader::ReadHudShop(MemSnapshot& snapshot) {
-	std::cout << "Called ReadHudShop\n";
-
 	if (moduleBaseAddr == 0) return;
 
 	snapshot.shopUnits.clear();

@@ -5,7 +5,6 @@
 #include <set>
 #include <nlohmann/json.hpp>
 #include "MemSnapshot.h"
-#include "Offsets.h"
 
 class MemoryReader {
 	

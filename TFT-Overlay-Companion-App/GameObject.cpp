@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "GameObject.h"
-#include "Offsets.h"
 
 void GameObject::LoadFromMem(DWORD64 baseAddr, HANDLE hProcess, const std::map<std::string, uint64_t>& offsets) {
 	if (baseAddr == 0) return;

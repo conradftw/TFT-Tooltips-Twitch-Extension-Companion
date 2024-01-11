@@ -9,8 +9,27 @@ The TFT Tooltips Companion App works behind the scenes while you are streaming, 
 
 Note: the TFT Tooltips Companion uses "passive memory reading" in order to get live data. Apps like Blitz.gg, Overwolf, and others also use this technique to get data that the Riot API does not provide. Riot's policy on passive memory reading is that it is allowed as long as no competitive advantage is provided. The TFT Tooltips Companion App is only sending data based on the streamer's current POV, thus providing no competitive advantage for the user. 
 
-That said, the TFT Tooltips Companion App is not affiliated with Riot and Riot's stance on memory reading may change at any time. 
+That said, the TFT Tooltips Companion App is not affiliated with Riot and Riot's stance on memory reading may change at any time.
 
+## Setup 
+0. Requirements:
+  - Windows 10. Mac and Linux not supported. Windows 11 hasn't been tested but might work?
+  - TFT game MUST be 1920x1080 resolution. This app will not fully work with other resolution at this time.
+
+1. Add the TFT Tooltips Extension to your channel by:
+	- Creator Dashboard -> Extensions (on the left) to go to the Extensions Discovery page.
+	- In the "Search all extensions" search box, type "TFT Tooltips" and you should see it in the results, then click "Add".
+	- The extensions configuration page should pop up now. On the bottom right, click "Activate" then "Set as Overlay 1". 
+	- If the configuration page did not pop up, then instead click "My Extensions" at the top next to "Discovery". You should now see a list of extensions added to your channel. Find the "TFT Tooltips" extension and then click "Activate" then "Set as Overlay 1". 
+	- Now the extension has been enabled for your channel!
+2. Sign up for a key for your channel by messaging the developer on Discord. You will be asked to verify that you own this twitch channel. Once verified, the developer will send you a key on Discord; please keep this key private. If you lose or forget your key, you will need to do this step again. 
+3.  Download and run the companion app:
+	- Go to the [releases page](https://github.com/conradftw/TFT-Tooltips-Twitch-Extension-Companion/releases/) and download the latest zip file. Unzip anywhere on your computer.
+	- Double-click on "TFT-Overlay-Companion-App.exe" to run the app
+	- Enter the key you got from step 2 by copying it and right-clicking anywhere on window. If it says "Login token has been validated" then you are all done! The Companion App will automatically detect when a TFT game is running and send live data to the Twitch Extension. 
+		- If you see a different message, please make sure you have the right key and that entered it correctly. If this problem persists, create a ticket on the extension Discord.
+	- The companion app has to be running for the Twitch extension to work. If you are not streaming, you can simply close this app. You will have to re-enter your key every time you open the app.
+ 
 ## Features
 
 1. Hover over the traits on screen to get that trait's description, effects, and units with that trait. Unhover to close the tooltip.
@@ -52,23 +71,6 @@ Feature screenshots:
 
 - unit stats
 ![unit stats](https://i.imgur.com/sWUu90A.png  "unit stats")
-
-## Setup 
-0. Requirements:
-  - Windows 10. Mac and Linux not supported. Windows 11 hasn't been tested but might work?
-  - TFT game MUST be 1920x1080 resolution. This app will not fully work with other resolution at this time.
-
-1. Add the TFT Tooltips Extension to your channel by:
-	- Creator Dashboard -> Extensions (on the left) to go to the Extensions Discovery page.
-	- In the "Search all extensions" search box, type "TFT Tooltips" and then click "Add".
-	- The extensions configuration page should pop up now. On the bottom right, click "Activate" then "Set as Overlay 1" and now the extension has enabled for your channel!
-2. Sign up for a key for your channel by messaging the developer on Discord. You will be asked to verify that you own this twitch channel. Once verified, the developer will send you a key on Discord; please keep this key private. If you lose or forget your key, you will need to do this step again. 
-3.  Download and run the companion app:
-	- Go to the [releases page](https://github.com/conradftw/TFT-Tooltips-Twitch-Extension-Companion/releases/) and download the latest zip file. Unzip anywhere on your computer.
-	- Double-click on "TFT-Overlay-Companion-App.exe" to run the app
-	- Enter the key you got from step 2 by copying it and right-clicking anywhere on window. If it says "Login token has been validated" then you are all done! The Companion App will automatically detect when a TFT game is running and send live data to the Twitch Extension. 
-		- If you see a different message, please make sure you have the right key and that entered it correctly. If this problem persists, create a ticket on the extension Discord.
-	- The companion app has to be running for the Twitch extension to work. If you are not streaming, you can simply close this app. You will have to re-enter your key every time you open the app.
 
 ## Discord 
 If you have any questions, comments, bug reports, etc, please use the Extension Discord server and I'll get back to you when I can.

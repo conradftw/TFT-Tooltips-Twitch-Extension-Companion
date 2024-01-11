@@ -2,7 +2,6 @@
 
 #include "TraitObject.h"
 #include "Utils.h"
-#include "Offsets.h"
 
 void TraitObject::LoadFromMem(DWORD64 baseAddr, HANDLE hProcess, const std::map<std::string, uint64_t> &offsets) {
 	if (baseAddr == 0) return;

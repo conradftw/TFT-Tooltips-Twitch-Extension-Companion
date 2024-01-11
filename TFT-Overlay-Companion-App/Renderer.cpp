@@ -3,7 +3,6 @@
 #include <cmath>
 
 #include "Renderer.h"
-#include "Offsets.h"
 #include "Utils.h"
 
 void Renderer::LoadFromMem(DWORD_PTR rendererBaseAddr, const std::map<std::string, uint64_t>& offsets, DWORD_PTR leagueBaseAddr, HANDLE hProcess) {
