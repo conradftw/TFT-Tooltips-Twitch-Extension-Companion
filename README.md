@@ -115,6 +115,8 @@ Now, the actual memory addresses for the player/health/gold will be different ea
 
 For example: if you use a memory scanner to look at TFT’s memory when its running, you might see the base address for TFT is 0x1000 and the address for the player’s gold is at 0x7000. Now say you restart your game and look again, this time TFT’s base address might be 0x2000 and the player’s gold address is 0x8000.
 
+// SORRY THIS EXPLANATION ISN'T COMPLETELY ACCURATE. I wrote this at 3am so I left out a big reason to use offsets which is that most of the time structures you are interested in have dynamic addresses that change on program restart because they are allocated on the heap. So the goal isnt to find this structures, but rather find the POINTER to this structure, and often times this pointer can be found by an offsets away from the base address of the module. I will do a rewrite once i wake up.
+
 The player’s gold address changes each time you open the game, so how can you consistently read the gold value from this address if it changes?
 
 So like I mentioned earlier, when you run TFT, it will get loaded at some random base address decided by your operating system. However, the TFT program that now starts at that base address has a consistent memory layout, meaning if you start at that base address and add 0x6000 bytes, you will always arrive at the memory address for the player gold.
