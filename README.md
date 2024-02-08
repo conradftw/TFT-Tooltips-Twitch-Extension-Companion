@@ -3,13 +3,13 @@
 
 The TFT Tooltips Companion App is the essential bridge between the TFT game you are streaming and the interactive experience provided by the TFT Tooltips Twitch Extension. By installing this application on your computer, viewers can interact with your stream as if they were the ones playing the game! 
 
+Here is a video showing the extension in action: https://www.youtube.com/watch?v=1kJyM_D6no0
+
 ## How it works
 
 The TFT Tooltips Companion App works behind the scenes while you are streaming, reading live TFT game data from memory. This data is then ultimately sent to the Twitch extension, enabling real-time interaction for viewers. As viewer's hover over elements on the screen, the extension responds by displaying informative tooltips relevant to the in-game action. If you want a more technical explanation on how the whole project works, click here.
 
-Note: the TFT Tooltips Companion uses "passive memory reading" in order to get live data. Apps like Blitz.gg, Overwolf, and others also use this technique to get data that the Riot API does not provide. Riot's policy on passive memory reading is that it is allowed as long as no competitive advantage is provided. The TFT Tooltips Companion App is only sending data based on the streamer's current POV, thus providing no competitive advantage for the user. 
-
-That said, the TFT Tooltips Companion App is not affiliated with Riot and Riot's stance on memory reading may change at any time.
+Note: the TFT Tooltips Companion uses "passive memory reading" in order to get live data. Apps like Blitz.gg, Overwolf, and others also use this technique to get data that the Riot API does not provide. Riot's policy on passive memory reading is that it is allowed as long as no competitive advantage is provided. The TFT Tooltips Companion App is only sending data based on the streamer's current POV, thus providing no competitive advantage for the user. Riot is aware of this project and has said they are okay with me continuing work on this project. That said, the TFT Tooltips Companion App is not affiliated with Riot and Riot's stance on memory reading may change at any time so use this project at your own risk.
 
 ## Setup 
 0. Requirements:
@@ -99,29 +99,19 @@ This gamestate data is sent to a server where it will be validated before being 
 
 #### LView64
 
-My project uses the LView64 project as a base. The MemoryReader structure as well as how the app hooks into League of Legends is based on how LView64 did it. The boost libraries and all scripting functionality was removed and the ImGui overlay setup was modified. If anyone wants a more complete reference for a C++ League of Legends Memory Reading project, I highly recommend reading LView64 to see how it works.
+My project uses the LView64 project as a base. The MemoryReader structure, WorldtoScreen function, as well as how the app hooks into League of Legends is based on how LView64 did it. The boost libraries and all scripting functionality was removed and the ImGui overlay setup was modified. If anyone wants a much more complete reference for a C++ League of Legends Memory Reading project, I highly recommend reading LView64 to see how it works (link at the bottom).
 
 #### TFT Memory Reading and Offsets
 
-So this section is based on what I learned these past couple of months. I’m gonna include links at the bottom of this README to many of the resources I used to learn about memory reading and reverse engineering, (some are League/TFT specific, some aren’t) so if anyone reading is interested in learning more, check out those links. Also I’m still very much a beginner in these topics, so if anyone notices mistakes in what I wrote, please let me know so I can correct it, thanks.
+So this section is an intro to memory reading for beginners, written by a beginner, and is based on what I learned these past couple of months. I’m gonna include links at the bottom of this README to many of the resources I used to learn about memory reading and reverse engineering, (some are League/TFT specific, some aren’t) so if anyone reading is interested in learning more, check out those links. Also if anyone notices mistakes in what I wrote, please let me know so I can correct it, thanks.
 
 ---
 
-How does memory reading work? The idea is when you run TFT, the game is loaded into memory at some base address with a consistent memory layout.
+How does memory reading work? The idea is when you run TFT, the game will get loaded into memory at some base address with a consistent memory layout. This memory layout follows well-defined conventions determined by Windows and decides things like where program instructions are stored in memory and also, importantly to us, where the data/variables used in the program are stored. At the specific section of memory for data/variables, you can find things like your local player object, a list of what traits you have active, what units are in your shop, and basically every other data structure needed for your TFT game to work. 
 
-By memory layout, I mean that certain values and data structures you are interested in can be found at specific locations in memory from the base address. There will be a memory location for your player object, and at another location will be how much health you have, and at another location will be the amount of gold you have, etc.
+For example: if you use a memory scanner to look at TFT’s memory when its running, you might see the base address for TFT is at 0x100000 and the address for the local player object is at 0x150000. Now say you restart your game and look again, this time TFT’s base address might be 0x200000 and the player’s gold address is 0x250000. So you can see the actual addresses can change on each launch, but what remains the same is the distance between the two addresses (0x50000 bytes). Remember, when TFT is loaded into memory at some base address, its memory layout is consistent, meaning if you start at TFT's base address and add 0x50000 bytes, you will ALWAYS arrive at the address for the local player object.
 
-Now, the actual memory addresses for the player/health/gold will be different each time you re-open TFT because re-opening a program in Windows usually changes its base address due to something called ASLR.
-
-For example: if you use a memory scanner to look at TFT’s memory when its running, you might see the base address for TFT is 0x1000 and the address for the player’s gold is at 0x7000. Now say you restart your game and look again, this time TFT’s base address might be 0x2000 and the player’s gold address is 0x8000.
-
-// SORRY THIS EXPLANATION ISN'T COMPLETELY ACCURATE. I wrote this at 3am so I left out a big reason to use offsets which is that most of the time structures you are interested in have dynamic addresses that change on program restart because they are allocated on the heap. So the goal isnt to find this structures, but rather find the POINTER to this structure, and often times this pointer can be found by an offsets away from the base address of the module. I will do a rewrite once i wake up.
-
-The player’s gold address changes each time you open the game, so how can you consistently read the gold value from this address if it changes?
-
-So like I mentioned earlier, when you run TFT, it will get loaded at some random base address decided by your operating system. However, the TFT program that now starts at that base address has a consistent memory layout, meaning if you start at that base address and add 0x6000 bytes, you will always arrive at the memory address for the player gold.
-
-This 0x6000 value is known as a memory offset (offset from the base address), and is how you can read TFT’s memory, despite its base address changing on every launch.
+This 0x50000 value is known as a memory offset (offset from some other address), and is how you can read TFT’s memory.
 
 So now the problem becomes how to find an offset for a value I’m interested in? For example, I want to read live TFT game data, so I want to find an offset for the player’s shop, for the player’s traits, for the units on board, and more.
 
@@ -207,10 +197,21 @@ Finally, with the bounding box calculated, I can package this memory snapshot in
 
 ### TFT Tooltips Twitch Extension
 
+The actual Twitch extension can be found here in its own repo, which contains a write-up on how the twitch extension uses this live game data to display tooltips.
+
 https://github.com/conradftw/TFT-Tooltips-Twitch-Extension-Frontend/blob/main/README.md
 
 ### Links and References 
 
-Soon tm, dm me if i forget
+Great intro guide to reversing League - https://www.unknowncheats.me/forum/league-of-legends/567734-beginner-tutorial.html
+
+WorldToScreen and vector spaces - https://www.codereversing.com/archives/530
+
+Undetected Cheat Engine - https://www.unknowncheats.me/forum/anti-cheat-bypass/504191-undetected-cheat-engine-driver-2023-bypass-anticheats-eac.html
+
+Signatures and pattern scannig - https://www.youtube.com/watch?v=wTk6iDzv15Q
+
+x86 instructions - https://www.felixcloutier.com/x86/index.html
+
 
 
